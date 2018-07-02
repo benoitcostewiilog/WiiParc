@@ -1,0 +1,91 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Parc vue{% endblock %}
+
+{% block page_title %}Vue{% endblock %}
+
+{% block page_content %}
+<div class="row">
+  <div class="col-6">
+  	<form>
+  		<div class="input-group mb-3">
+  			<div class="input-group-prepend">
+  				<span class="input-group-text">
+  					Numéro de parc
+  				</span>
+  			</div>
+  			<input type="text" class="form-control" value="400AHD" disabled>
+  		</div>
+  		<div class="input-group mb-3">
+  			<div class="input-group-prepend">
+  				<span class="input-group-text">
+  					Type
+  				</span>
+  			</div>
+  			<input type="text" class="form-control" value="{{ parc.type }}" disabled>
+  		</div>
+  		<div class="input-group mb-3">
+  			<div class="input-group-prepend">
+  				<span class="input-group-text">
+  					Marque
+  				</span>
+  			</div>
+  			<input type="text" class="form-control" value="{{ parc.marque }}" disabled>
+  		</div>
+  		<div class="input-group mb-3">
+  			<div class="input-group-prepend">
+  				<span class="input-group-text">
+  					Numéro de série
+  				</span>
+  			</div>
+  			<input type="text" class="form-control" value="{{ parc.nserie }}" disabled>
+  		</div>
+  	</form>
+  </div>
+  <div class="col-6">
+  	<form>
+  		<div class="input-group mb-3">
+  			<div class="input-group-prepend">
+  				<span class="input-group-text">
+  					Propriété
+  				</span>
+  			</div>
+  			<input type="text" class="form-control" value="{{ parc.propriete }}" disabled>
+  		</div>
+  		<div class="input-group mb-3">
+  			<div class="input-group-prepend">
+  				<span class="input-group-text">
+  					Immatriculation
+  				</span>
+  			</div>
+  			<input type="text" class="form-control" value="{{ parc.immatriculation }}" disabled>
+  		</div>
+  		<div class="input-group mb-3">
+  			<div class="input-group-prepend">
+  				<span class="input-group-text">
+  					Année
+  				</span>
+  			</div>
+  			<input type="text" class="form-control" value="{{ parc.annee }}" disabled>
+  		</div>
+  		<div class="input-group mb-3">
+  			<div class="input-group-prepend">
+  				<span class="input-group-text">
+  					Commentaires
+  				</span>
+  			</div>
+  			<input type="text" class="form-control" value="{{ parc.commentaires }}" disabled>
+  		</div>
+  	</form>
+  	<div class="row">
+		<div class="col-4">
+  			<a href="#" class="btn btn-dark">Changer l'affectation</a>
+  		</div>
+  		<div class="col-4"></div>
+  		<div class="col-4">
+  			<a href="#" class="btn btn-dark">Modifier</a>	
+  		</div>
+  	</div>
+  </div>
+</div>
+{% endblock %}

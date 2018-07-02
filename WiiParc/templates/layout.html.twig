@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello {{ controller_name }}!{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+  	<div class="row">
+  		<div class="col-2">
+  			<nav class="navbar bg-dark navbar-dark">
+  				<a class="navbar-brand" href="{{ url('accueil') }}">
+  					<img src="" alt="Logo">
+  				</a>
+  				<ul class="navbar-nav">
+  					<li class="nav-item">
+  						<a class="nav-link" href="{{ url('accueil') }}">Accueil</a>
+  					</li>
+  					<li class="nav-item">
+  						<a class="nav-link" href="{{ url('parc_creation') }}">Nouveau parc</a>
+  					</li>
+  					<li class="nav-item">
+  						<a class="nav-link" href="{{ url('utilisateurs_gestion') }}">Gestion utilisateurs</a>
+  					</li>
+  				</ul>
+  			</nav>
+  		</div>
+  		<div class="col-10">
+  			<div class="row">
+  				<div class="col-6">
+  					<h1 class="text-center">{% block page_title %}Accueil</h1>{% endblock %}
+  				</div>
+  				<div class="col-6">
+  					<nav class="navbar">
+  						<form class="form-inline">
+  							<input class="form-control mr-2 shadow" type="text" placeholder="Recherche">
+  							<button class="btn btn-dark shadow" type="submit">Chercher</button>
+  						</form>
+  					</nav>
+  				</div>
+  			</div>
+  			{% block page_content %}{% endblock %}
+  		</div>
+  	</div>
+</div>
+{% endblock %}

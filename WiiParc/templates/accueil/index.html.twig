@@ -1,0 +1,65 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block page_content %}
+<div class="row">
+  <div class="col">
+    <table class="table table-hover text-center">
+      <thead class="thead-light">
+        <tr>
+          <th class="align-middle">Numéro de parc</th>
+          <th class="align-middle">Type</th>
+          <th class="align-middle">Marque</th>
+          <th class="align-middle">Numéro de série</th>
+          <th class="align-middle">Propriété</th>
+          <th class="align-middle">Immatriculation</th>
+          <th class="align-middle">Année</th>
+          <th class="align-middle">Commentaires</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for parc in parcs %}
+          <tr>
+            <td>{{ parc.id }}</td>
+            <td>{{ parc.type }}</td>
+            <td>{{ parc.marque }}</td>
+            <td>{{ parc.nserie }}</td>
+            <td>{{ parc.propriete }}</td>
+            <td>{{ parc.immatriculation }}</td>
+            <td>{{ parc.annee }}</td>
+            <td>{{ parc.commentaires }}</td>  
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-6"></div>
+  	<div class="col-6">
+  		<ul class="pagination justify-content-end mx-2">
+  			<li class="page-item">
+  				<a class="page-link" href="#">Précédent</a>
+  					</li>
+  						<li class="page-item">
+  							<a class="page-link" href="#">1</a>
+  						</li>
+  						<li class="page-item">
+  							<a class="page-link" href="#">2</a>
+  						</li>
+  						<li class="page-item">
+  							<a class="page-link" href="#">3</a>
+  						</li>
+  						<li class="page-item">
+  							<a class="page-link" href="#">Suivant</a>
+  						</li>
+  					</ul>
+  				</div>
+  			</div>
+  		</div>
+  	</div>
+  </div>
+</div>
+
+{% endblock %}

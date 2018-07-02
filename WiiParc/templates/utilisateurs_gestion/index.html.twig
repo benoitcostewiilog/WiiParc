@@ -1,0 +1,82 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Utilisateurs gestion{% endblock %}
+
+{% block page_title %}Gestion{% endblock %}
+
+{% block page_content %}
+<div class="container-fluid my-2 shadow border rounded border-secondary">
+    <div class="row">
+      	<div class="col">
+			<h2 class="text-center">Création</h2>
+      	</div>
+    </div>
+    <div class="row">
+      	<div class="col">
+			<form class="form-inline">
+  				<div class="input-group my-2 mx-2">
+    				<div class="input-group-prepend">
+      					<span class="input-group-text">Nom</span>
+    				</div>
+    				<input type="text" class="form-control" placeholder="Nom">
+  				</div>
+  				<div class="input-group my-2 mx-2">
+    				<div class="input-group-prepend">
+      					<span class="input-group-text">Login</span>
+    				</div>
+    				<input type="text" class="form-control" placeholder="Login">
+  				</div>
+  				<button type="submit" class="btn btn-dark">Valider</button>
+			</form>
+      	</div>
+    </div>
+</div>
+<div class="container-fluid my-2 shadow border rounded border-secondary">
+	<div class="row">
+    	<div class="col">
+			<h2 class="text-center">Modification</h2>
+      	</div>
+    </div>
+    <div class="row">
+      	<div class="col">
+			<form class="form-inline">
+  				<div class="input-group my-2 mx-2">
+    				<div class="input-group-prepend">
+					    <span class="input-group-text">Nom</span>
+					</div>
+					<input type="text" class="form-control" placeholder="Nom">
+				</div>
+				<div class="input-group my-2 mx-2">
+				    <div class="input-group-prepend">
+					    <span class="input-group-text">Login</span>
+				    </div>
+				    <input type="text" class="form-control" placeholder="Login">
+				</div>
+				<button type="submit" class="btn btn-dark">Valider</button>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="row">
+    <div class="col">
+    	<table class="table table-hover">
+			<thead class="thead-light">
+				<tr>
+					<th class="align-middle">Nom</th>
+				    <th class="align-middle">Login</th>
+				    <th class="align-middle">Infos</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for utilisateur in utilisateurs %}
+					<tr>
+						<td>{{ utilisateur.nom }}</td>
+						<td>{{ utilisateur.login }}</td>
+						<td>{{ utilisateur.mdp }}</td>	
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}
