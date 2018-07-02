@@ -20,14 +20,15 @@ class ParcController extends Controller
         $parc = $em->getRepository(Parc::class)->find($id);
         $form = $this->createForm(ParcCreationFormType::class, $parc);
 
-        $form->handleRequest($request);
+        #$form->handleRequest($request);
 
 
 
         return $this->render('parc/vue/index.html.twig', [
             'controller_name' => 'ParcController',
             #'parc' => $parc,
-            'form' => ''
+            'id' => $id,
+            'form' => $form->createView(),
         ]);
     }
 
