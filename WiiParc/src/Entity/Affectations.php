@@ -17,13 +17,13 @@ class Affectations
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parc", inversedBy="affectations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parc", inversedBy="affectations", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $parc;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Societe", inversedBy="affectations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Societe", inversedBy="affectations", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $societe;
@@ -37,6 +37,11 @@ class Affectations
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dsortie;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $nparc;
 
     public function getId()
     {
@@ -87,6 +92,18 @@ class Affectations
     public function setDsortie(?\DateTimeInterface $dsortie): self
     {
         $this->dsortie = $dsortie;
+
+        return $this;
+    }
+
+    public function getNparc(): ?string
+    {
+        return $this->nparc;
+    }
+
+    public function setNparc(string $nparc): self
+    {
+        $this->nparc = $nparc;
 
         return $this;
     }

@@ -2,13 +2,15 @@
 
 namespace App\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use App\Entity\Parc;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Form\ParcCreationFormType;
-use Symfony\Component\HttpFoundation\Request;
-
+use App\Form\AffectationsCreationFormType;
+use App\Entity\Parc;
+use App\Entity\Affectations;
+use \Datetime;
 
 class ParcController extends Controller
 {
@@ -17,16 +19,11 @@ class ParcController extends Controller
      */
     public function vue($id, EntityManagerInterface $em, Request $request)
     {
-        $parc = $em->getRepository(Parc::class)->find($id);
-        $form = $this->createForm(ParcCreationFormType::class, $parc);
-
-        #$form->handleRequest($request);
-
-
+        $affectation = $em->getRepository(Affectations::class)->find($id);
+        $form = $this->createForm(AffectationsCreationFormType::class, $affectation);
 
         return $this->render('parc/vue/index.html.twig', [
             'controller_name' => 'ParcController',
-            #'parc' => $parc,
             'id' => $id,
             'form' => $form->createView(),
         ]);
@@ -38,16 +35,16 @@ class ParcController extends Controller
     public function creation(EntityManagerInterface $em, Request $request)
     {
 
-        $parc = new Parc();
-        $form = $this->createForm(ParcCreationFormType::class, $parc);
+        $affectation = new Affectations();
+        $form = $this->createForm(AffectationsCreationFormType::class, $affectation);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('validation')->isClicked()) {
-                $parc = $form->getData();
+                $affectation = $form->getData();
 
-                $em->persist($parc);
+                $em->persist($affectation);
                 $em->flush();    
             }
 
@@ -65,7 +62,8 @@ class ParcController extends Controller
      */
     public function modification($id, EntityManagerInterface $em, Request $request)
     {
-        $parc = $em->getRepository(Parc::class)->find($id);
+        $affectation = $em->getRepository(Affectations::class)->find($id);
+        $parc = $affectation->getParc();
         $form = $this->createForm(ParcCreationFormType::class, $parc);
 
         $form->handleRequest($request);
@@ -74,8 +72,7 @@ class ParcController extends Controller
             if ($form->get('validation')->isClicked()) {
                 $parc = $form->getData();
 
-                #$em->persist($parc);
-                $em->flush();    
+                $em->flush();
             }
 
             return $this->redirectToRoute('accueil');
@@ -83,11 +80,55 @@ class ParcController extends Controller
 
         return $this->render('parc/modification/index.html.twig', [
             'controller_name' => 'ParcController',
-            #'parc' => $parc,
             'id' => $id,
             'form' => $form->createView(),
         ]);
     }
 
+    /**
+     * @Route("/parc/changement_numero/{id}", name="parc_changement_numero")
+     */
 
+     public function changement_numero($id, EntityManagerInterface $em, Request $request)
+     {
+        $affectation = $em->getRepository(Affectations::class)->find($id);
+        $new_affectation = new Affectations();
+
+        $parc = $affectation->getParc();
+        $new_parc = new Parc();
+
+        $new_parc->setType($parc->getType());
+        $new_parc->setMarque($parc->getMarque());
+        $new_parc->setNserie($parc->getNserie());
+        $new_parc->setPropriete($parc->getPropriete());
+        $new_parc->setImmatriculation($parc->getImmatriculation());
+        $new_parc->setAnnee($parc->getAnnee());
+        $new_parc->setCommentaires($parc->getCommentaires());
+
+        $affectations = $parc->getAffectations();
+        foreach($affectations as $a) {
+            $new_parc->addAffectation($a);
+        }
+        $new_affectation->setParc($new_parc);
+        $form = $this->createForm(AffectationsCreationFormType::class, $new_affectation);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('validation')->isClicked()) {
+                $new_affectation = $form->getData();
+                $affectation->setDsortie(new Datetime(date("d/m/y")));
+                $em->persist($new_affectation);
+                $em->flush();
+            }
+
+            return $this->redirectToRoute('accueil');
+        }
+
+        return $this->render('parc/changement_numero/index.html.twig', [
+            'controller_name' => 'ParcController',
+            'id' => $id,
+            'form' => $form->createView(),
+        ]);
+     }
 }

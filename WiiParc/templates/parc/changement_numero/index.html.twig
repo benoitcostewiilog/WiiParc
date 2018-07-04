@@ -2,7 +2,7 @@
 
 {% block title %}Parc création{% endblock %}
 
-{% block page_title %}Création{% endblock %}
+{% block page_title %}Changement numéro{% endblock %}
 
 {% block page_content %}
 
@@ -106,22 +106,19 @@
       {{ form_row(form.parc.propriete) }}
       {{ form_row(form.parc.immatriculation) }}
       {{ form_row(form.parc.annee) }}
-      {{ form_row(form.parc.commentaires, {'required': false}) }}
+      {{ form_row(form.parc.commentaires, {'required': false} ) }}
       <div class="row">
         <div class="col-4">
           {{ form_row(form.validation, {'attr': {'class': 'btn btn-dark'} }) }}
         </div>
+        <div class="col-4"></div>
         <div class="col-4">
-          <button type="reset" class="btn btn-secondary">Reset</button>
-        </div>
-        <div class="col-4">
-          <a href="{{ url('accueil') }}" class="btn btn-danger">Annuler</a>
+          <a href="{{ url('parc_vue', {'id': id}) }}" class="btn btn-danger">Annuler</a>
         </div>
       </div>
     </div>
   </div>
 {{ form_row(form._token) }}
 {{ form_end(form, {'render_rest' : false}) }}
-
 
 {% endblock %}

@@ -5,6 +5,7 @@
 {% block page_title %}Modification{% endblock %}
 
 {% block page_content %}
+
 {#<div class="row">
   <div class="col-6">
   	<form>
@@ -102,7 +103,7 @@
       {{ form_row(form.propriete) }}
       {{ form_row(form.immatriculation) }}
       {{ form_row(form.annee) }}
-      {{ form_row(form.commentaires, {'required': false} ) }}
+      {{ form_row(form.commentaires, {'required': false}) }}
       <div class="row">
         <div class="col-4">
           {{ form_row(form.validation, {'attr': {'class': 'btn btn-dark'} }) }}
@@ -114,6 +115,7 @@
       </div>
     </div>
   </div>
-{{ form_end(form) }}
+{{ form_row(form._token) }}
+{{ form_end(form, {'render_rest' : false}) }}
 
 {% endblock %}
