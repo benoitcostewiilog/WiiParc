@@ -2,33 +2,43 @@
 
 {% block title %}Accueil{% endblock %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/style.css') }}">
+{% endblock %}
+
 {% block page_content %}
 <div class="row">
   <div class="col">
-    <table class="table table-hover text-center">
+    <table class="table table-hover text-center avectri">
       <thead class="thead-light">
         <tr>
           <th class="align-middle">Numéro de parc</th>
+          <th class="align-middle">Société</th>
+          <th class="align-middle" data-tri="1" class="selection">Date d'entrée</th>
+          <th class="align-middle">Date de sortie</th>
           <th class="align-middle">Type</th>
           <th class="align-middle">Marque</th>
           <th class="align-middle">Numéro de série</th>
           <th class="align-middle">Propriété</th>
           <th class="align-middle">Immatriculation</th>
-          <th class="align-middle">Année</th>
+          <th class="align-middle" data-type="num">Année</th>
           <th class="align-middle">Commentaires</th>
         </tr>
       </thead>
       <tbody>
-        {% for parc in parcs %}
+        {% for affectation in affectations %}
           <tr>
-            <td>{{ parc.id }}</td>
-            <td>{{ parc.type }}</td>
-            <td>{{ parc.marque }}</td>
-            <td>{{ parc.nserie }}</td>
-            <td>{{ parc.propriete }}</td>
-            <td>{{ parc.immatriculation }}</td>
-            <td>{{ parc.annee }}</td>
-            <td>{{ parc.commentaires }}</td>  
+            <td>{{ affectation.nparc }}</td>
+            <td>{{ affectation.societe.nom }}</td>
+            <td>{{ affectation.dentree|date("d/m/Y") }}</td>
+            <td>{{ affectation.dsortie|date("d/m/Y") }}</td>
+            <td>{{ affectation.parc.type }}</td>
+            <td>{{ affectation.parc.marque }}</td>
+            <td>{{ affectation.parc.nserie }}</td>
+            <td>{{ affectation.parc.propriete }}</td>
+            <td>{{ affectation.parc.immatriculation }}</td>
+            <td>{{ affectation.parc.annee }}</td>
+            <td>{{ affectation.parc.commentaires }}</td>
           </tr>
         {% endfor %}
       </tbody>
@@ -40,26 +50,28 @@
   	<div class="col-6">
   		<ul class="pagination justify-content-end mx-2">
   			<li class="page-item">
-  				<a class="page-link" href="#">Précédent</a>
-  					</li>
-  						<li class="page-item">
-  							<a class="page-link" href="#">1</a>
-  						</li>
-  						<li class="page-item">
-  							<a class="page-link" href="#">2</a>
-  						</li>
-  						<li class="page-item">
-  							<a class="page-link" href="#">3</a>
-  						</li>
-  						<li class="page-item">
-  							<a class="page-link" href="#">Suivant</a>
-  						</li>
-  					</ul>
-  				</div>
-  			</div>
-  		</div>
+  				<a class="page-link prev" href="#" >Précédent</a>
+  			</li>
+  			<li class="page-item">
+  				<a class="page-link" href="#">1</a>
+  			</li>
+  			<li class="page-item">
+  				<a class="page-link" href="#">2</a>
+  			</li>
+  			<li class="page-item">
+  				<a class="page-link" href="#">3</a>
+  			</li>
+  			<li class="page-item">
+  				<a class="page-link next" href="#">Suivant</a>
+  			</li>
+  		</ul>
   	</div>
   </div>
 </div>
 
+
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('vendor/jquery/script.js') }}"></script>
 {% endblock %}

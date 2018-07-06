@@ -60,10 +60,10 @@ class AffectationFixture extends Fixture
         // AFFECTATION
 
         $affectations = array(
-            'affectation1' => [0, 0, new \DateTime('2018-07-03'), new \DateTime('2018-07-05'), '42'],
-            'affectation2' => [1, 1, new \DateTime('2018-07-03'), new \DateTime('2018-07-05'), '42'],
-            'affectation3' => [2, 2, new \DateTime('2018-07-03'), new \DateTime('2018-07-05'), '42'],
-            'affectation4' => [3, 3, new \DateTime('2018-07-03'), new \DateTime('2018-07-05'),' 42'],
+            'affectation1' => [0, 0, new \DateTime('2018-07-03'), new \DateTime('2018-07-05'), '39'],
+            'affectation2' => [1, 1, new \DateTime('2018-07-03'), new \DateTime('2018-07-05'), '40'],
+            'affectation3' => [2, 2, new \DateTime('2018-07-03'), new \DateTime('2018-07-05'), '41'],
+            'affectation4' => [3, 3, new \DateTime('2018-07-03'), new \DateTime('2018-07-05'), '42'],
         );
 
         foreach ($affectations as $a => $value) {
