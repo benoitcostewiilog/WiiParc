@@ -1,0 +1,30 @@
+{% extends 'layout_fos.html.twig' %}
+
+
+
+{% block user_content %}
+
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+      	<h1 class="text-center">Créer un compte</h1>
+    </div>
+    <div class="col-2"></div>
+</div>
+
+<div class="row">
+	<div class="col-4"></div>
+	<div class="col-4">
+		{{ form_start(form) }}
+    		{{ form_row(form.username, {'attr': {'autofocus' : true} }) }}
+    		{{ form_row(form.email) }}
+    		{{ form_row(form.plainPassword.first) }}
+    		{{ form_row(form.plainPassword.second) }}
+
+   			<button class="btn btn-dark" type="submit">Enregistrer</button>
+   			<a class="btn btn-dark" href="{{ url('login') }}">{{ 'Se connecter' }}</a>
+			{{ form_end(form) }}
+	</div>
+	<div class="col-4"></div>
+</div>
+{% endblock %}
