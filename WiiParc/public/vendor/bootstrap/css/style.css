@@ -1,0 +1,31 @@
+.flecheDesc {
+        width: 0; 
+        height: 0; 
+        float:right;
+        margin: 10px;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-bottom: 5px solid black;
+}
+.flecheAsc {
+        width: 0; 
+        height: 0;
+        float:right;
+        margin: 10px;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid black;
+}
+
+.avectri th {text-align:center;padding:5px 0 0 5px;vertical-align: middle;background-color:#999690;color:#444;cursor:pointer;
+	-webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+.avectri th.selection {background-color:#5d625c;color:#fff;}
+.avectri th.selection .flecheDesc {border-bottom-color: white;}
+.avectri th.selection .flecheAsc {border-top-color: white;}
