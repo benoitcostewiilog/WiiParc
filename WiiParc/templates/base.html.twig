@@ -7,10 +7,34 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <div>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <div>
+                    {{ 'Logged in as'}}
+                    <span class="badge badge-primary"> {{ app.user.username}} </span>|
+                    <a class="btn btn-dark" href="{{ url('logout') }}">
+                        {{ 'Déconnexion' }}
+                    </a>
+                    <a class="btn btn-dark" href="{{ 'change_password' }}">Changer password</a>
+                </div>
+            {% endif %}
+        </div>
+
+        {% if app.request.hasPreviousSession %}
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="flash-{{ type }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+        {% block body %}
+        {% endblock %}
         <!-- Optional JavaScript -->
     	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    	<script src="{{ asset('vendor/jquery/jquery.slim.min.js') }}"></script>
+    	<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     	<script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
         {% block javascripts %}{% endblock %}

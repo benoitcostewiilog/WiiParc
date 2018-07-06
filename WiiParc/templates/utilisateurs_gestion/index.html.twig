@@ -62,17 +62,17 @@
     	<table class="table table-hover">
 			<thead class="thead-light">
 				<tr>
-					<th class="align-middle">Nom</th>
-				    <th class="align-middle">Login</th>
-				    <th class="align-middle">Infos</th>
+					<th class="align-middle">Username</th>
+				    <th class="align-middle">Email</th>
+				    <th class="align-middle">Password</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for utilisateur in utilisateurs %}
 					<tr>
-						<td>{{ utilisateur.nom }}</td>
-						<td>{{ utilisateur.login }}</td>
-						<td>{{ utilisateur.mdp }}</td>	
+						<td>{{ utilisateur.username }}</td>
+						<td>{{ utilisateur.email }}</td>
+						<td>{{ utilisateur.password }}</td>	
 					</tr>
 				{% endfor %}
 			</tbody>

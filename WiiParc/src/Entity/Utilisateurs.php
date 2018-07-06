@@ -5,33 +5,54 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UtilisateursRepository")
+ * @UniqueEntity(fields="email", message="Email already taken")
+ * @UniqueEntity(fields="username", message="Username already taken")
+ * 
  */
-class Utilisateurs
+class Utilisateurs implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $login;
+    * @ORM\Column(type="string", length=25, unique=true)
+    * @Assert\NotBlank()
+    */
+    private $username;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $mdp;
+    * @ORM\Column(type="string", length=64)
+    */
+    private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=8, max=4096)
+     * @Assert\Regex(pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/", message="Use 1 upper case letter, 1 lower case letter, and 1 number")
      */
-    private $nom;
+    private $plainPassword;
+
+    /**
+    * @ORM\Column(type="string", length=255, unique=true)
+    * @Assert\NotBlank()
+    * @Assert\Email()
+    */
+    private $email;
+
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $roles;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Droits", mappedBy="utilisateur")
@@ -40,6 +61,7 @@ class Utilisateurs
 
     public function __construct()
     {
+        $this->roles = array('ROLE_USER');
         $this->droits = new ArrayCollection();
     }
 
@@ -48,40 +70,21 @@ class Utilisateurs
         return $this->id;
     }
 
-    public function getLogin(): ?string
+     public function getUsername()
     {
-        return $this->login;
+        return $this->username;
     }
 
-    public function setLogin(string $login): self
+    public function getSalt()
     {
-        $this->login = $login;
-
-        return $this;
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
     }
 
-    public function getMdp(): ?string
+    public function getPassword()
     {
-        return $this->mdp;
-    }
-
-    public function setMdp(string $mdp): self
-    {
-        $this->mdp = $mdp;
-
-        return $this;
-    }
-
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): self
-    {
-        $this->nom = $nom;
-
-        return $this;
+        return $this->password;
     }
 
     /**
@@ -111,6 +114,82 @@ class Utilisateurs
                 $droit->setUtilisateur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+        ) = unserialize($serialized, array('allowed_classes' => false));
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($password)
+    {
+        $this->plainPassword = $password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
     }
