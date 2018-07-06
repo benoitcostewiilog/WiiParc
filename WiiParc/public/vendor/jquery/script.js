@@ -18,7 +18,7 @@ $(document).ready(function() {
 		for (var i = 0; i < pathArray.length - 1; i++) {
 			url += pathArray[i] + "/";
 		}
-		window.location.replace(url + "parc/vue/" + nparc);
+		window.location.assign(url + "parc/vue/" + nparc);
 	});
 
 	/**
@@ -86,7 +86,7 @@ $(document).ready(function() {
 	}
 	
   function twInit() {
-    twInitTableau();
+	twInitTableau();
   }
 
 	function twPret(maFonction) {
@@ -102,8 +102,11 @@ $(document).ready(function() {
 	function twTriTableau() {
 		var nBoolDir = this.getAttribute("data-tri");
 		this.setAttribute("data-tri", (nBoolDir=="0") ? "1" : "0");
-		[].forEach.call( this.parentNode.querySelectorAll("th"), function(oTh) {oTh.classList.remove("selection");});
-		this.className = "selection";
+		[].forEach.call( this.parentNode.querySelectorAll("th"), function(oTh) {
+			oTh.classList.remove("selection");
+			oTh.classList.add("align-middle");
+		});
+		this.className = "selection align-middle";
 		this.querySelector("span").className = (nBoolDir == "0") ? "flecheAsc" : "flecheDesc";
 
 		var oTbody = this.parentNode.parentNode.parentNode.getElementsByTagName("tbody")[0]; 

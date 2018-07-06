@@ -6,104 +6,21 @@
 
 {% block page_content %}
 
-{#<div class="row">
-  	<div class="col-6">
-  		<form>
-  			<div class="input-group mb-3">
-  				<div class="input-group-prepend">
-  					<span class="input-group-text">
-  						Numéro de parc
-  					</span>
-  				</div>
-  				<input type="text" class="form-control" placeholder="Ex : 400AHD ">
-  			</div>
-  			<div class="input-group mb-3">
-  				<div class="input-group-prepend">
-  					<span class="input-group-text">
-  						Type
-  					</span>
-  				</div>
-  				<input type="text" class="form-control" placeholder=" Ex : Chariot">
-  			</div>
-  			<div class="input-group mb-3">
-  				<div class="input-group-prepend">
-  					<span class="input-group-text">
-  						Marque
-  					</span>
-  				</div>
-  				<input type="text" class="form-control" placeholder="Ex : Gt">
-  			</div>
-  			<div class="input-group mb-3">
-  				<div class="input-group-prepend">
-  					<span class="input-group-text">
-  						Numéro de série
-  					</span>
-  				</div>
-  				<input type="text" class="form-control" placeholder="Ex : REF466AZ">
-  			</div>
-  		</form>
-  	</div>
-  	<div class="col-6">
-  		<form>
-  			<div class="input-group mb-3">
-				<div class="input-group-prepend">
-					<span class="input-group-text">
- 						Propriété
-  					</span>
-  				</div>
-  				<input type="text" class="form-control" placeholder="Ex : Acheté">
-  			</div>
-  			<div class="input-group mb-3">
-  				<div class="input-group-prepend">
-  					<span class="input-group-text">
-  						Immatriculation
-  					</span>
-  				</div>
-  				<input type="text" class="form-control" placeholder="Ex : 374-AH-489">
-  			</div>
-  			<div class="input-group mb-3">
-  				<div class="input-group-prepend">
-  					<span class="input-group-text">
-  						Année
-  					</span>
-  				</div>
-  				<input type="text" class="form-control" placeholder="Ex : 2004">
-  			</div>
-  			<div class="input-group mb-3">
-  				<div class="input-group-prepend">
-  					<span class="input-group-text">
-  						Commentaires
-  					</span>
-  				</div>
-  				<input type="text" class="form-control" placeholder="Ex : R.A.S.">
-  			</div>
-  		</form>
-  		<div class="row">
-			<div class="col-4">
-  				<button href="#" class="btn btn-danger">Annuler</button>
-  			</div>
-  			<div class="col-4"></div>
-  			<div class="col-4">
-  				<button type="submit" class="btn btn-dark">Valider</a>	
-  			</div>
-  		</div>
-  	</div>
-</div>#}
-
 {{ form_start(form) }}
   {{ form_errors(form) }}
   <div class="row">
     <div class="col-6">
+			{{ form_row(form.nparc) }}
+			{{ form_row(form.societe.nom) }}
       {{ form_row(form.parc.type) }}
       {{ form_row(form.parc.marque) }}
-      {{ form_row(form.parc.nserie) }}
-			{{ form_row(form.societe.nom) }}
-			{{ form_row(form.nparc) }}
 			{{ form_row(form.dentree) }}
+			{{ form_row(form.dsortie) }}
     </div>
 
     <div class="col-6">
       {{ form_row(form.parc.propriete) }}
+			{{ form_row(form.parc.nserie) }}
       {{ form_row(form.parc.immatriculation) }}
       {{ form_row(form.parc.annee) }}
       {{ form_row(form.parc.commentaires, {'required': false} ) }}

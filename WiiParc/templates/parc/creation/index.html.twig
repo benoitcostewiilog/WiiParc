@@ -9,16 +9,17 @@
   {{ form_errors(form) }}
   <div class="row">
     <div class="col-6">
+ 			{{ form_row(form.nparc) }}
+    	{{ form_row(form.societe.nom) }}
       {{ form_row(form.parc.type) }}
-      {{ form_row(form.parc.marque) }}
       {{ form_row(form.parc.nserie) }}
-			{{ form_row(form.societe.nom) }}
-			{{ form_row(form.nparc) }}
 			{{ form_row(form.dentree) }}
+      {{ form_row(form.dsortie) }}
     </div>
 
     <div class="col-6">
       {{ form_row(form.parc.propriete) }}
+      {{ form_row(form.parc.marque) }}
       {{ form_row(form.parc.immatriculation) }}
       {{ form_row(form.parc.annee) }}
       {{ form_row(form.parc.commentaires, {'required': false}) }}
@@ -46,7 +47,7 @@ $("#affectations_creation_form_nparc").keyup(function() {
   resetErrors();
   var val = $(this).val();
 	$.ajax({
-			url: "{{ path('ajax') }}",
+			url: "{{ path('parc_creation') }}",
 			type: "POST",
 			dataType: "json",
 			data: {"search": val},

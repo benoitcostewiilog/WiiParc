@@ -12,7 +12,7 @@ class UtilisateurFixture extends Fixture
     {
         // $product = new Product();
         // $manager->persist($product);
-
+		/*
     	$utilisateurs = array(
     		'user1' => ['login1','username1','mdp1'],
     		'user2' => ['login2','username2','mdp2'],
@@ -29,6 +29,7 @@ class UtilisateurFixture extends Fixture
 			$manager->persist($user);
 		}
 
-        $manager->flush();
-    }
+		$manager->flush();
+		*/
+	}
 }

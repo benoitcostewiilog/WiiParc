@@ -93,17 +93,17 @@
   {{ form_errors(form) }}
   <div class="row">
     <div class="col-6">
+			{{ form_row(form.nparc, {'disabled': true}) }}
+			{{ form_row(form.societe.nom, {'disabled': true}) }}
       {{ form_row(form.parc.type, {'disabled': true}) }}
       {{ form_row(form.parc.marque, {'disabled': true}) }}
-      {{ form_row(form.parc.nserie, {'disabled': true}) }}
-			{{ form_row(form.societe.nom, {'disabled': true}) }}
-			{{ form_row(form.nparc, {'disabled': true}) }}
 			{{ form_row(form.dentree, {'disabled': true}) }}
 			{{ form_row(form.dsortie, {'disabled': true}) }}
     </div>
 
     <div class="col-6">
       {{ form_row(form.parc.propriete, {'disabled': true}) }}
+		  {{ form_row(form.parc.nserie, {'disabled': true}) }}
       {{ form_row(form.parc.immatriculation, {'disabled': true}) }}
       {{ form_row(form.parc.annee, {'disabled': true}) }}
       {{ form_row(form.parc.commentaires, {'required': false, 'disabled': true}) }}

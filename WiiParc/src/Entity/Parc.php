@@ -19,7 +19,8 @@ class Parc
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="App\Entity\TypeVehicule", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $type;
 
@@ -34,7 +35,8 @@ class Parc
     private $nserie;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Propriete", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $propriete;
 
@@ -63,17 +65,17 @@ class Parc
         $this->affectations = new ArrayCollection();
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getType(): ?string
+    public function getType(): ?TypeVehicule
     {
         return $this->type;
     }
 
-    public function setType(string $type): self
+    public function setType(?TypeVehicule $type): self
     {
         $this->type = $type;
 
@@ -104,12 +106,12 @@ class Parc
         return $this;
     }
 
-    public function getPropriete(): ?string
+    public function getPropriete(): ?Propriete
     {
         return $this->propriete;
     }
 
-    public function setPropriete(string $propriete): self
+    public function setPropriete(?Propriete $propriete): self
     {
         $this->propriete = $propriete;
 
@@ -182,4 +184,5 @@ class Parc
 
         return $this;
     }
+
 }

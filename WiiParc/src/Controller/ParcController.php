@@ -37,6 +37,10 @@ class ParcController extends Controller
 	public function creation(EntityManagerInterface $em, Request $request)
 	{
 
+		$bool = false;
+		$search = $request->request->get('search');
+		$affectations = $em->getRepository(Affectations::class)->findAll();
+
 		$affectation = new Affectations();
 		$form = $this->createForm(AffectationsCreationFormType::class, $affectation);
 
@@ -51,6 +55,14 @@ class ParcController extends Controller
 			}
 
 			return $this->redirectToRoute('accueil');
+		}
+
+		// AJAX
+		if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
+			foreach($affectations as $a) {
+				if (strcmp($search, $a->getNparc()) == 0) {$bool = true;}
+			}
+			return new JsonResponse($bool);
 		}
 
 		return $this->render('parc/creation/index.html.twig', [
@@ -133,22 +145,4 @@ class ParcController extends Controller
 			'form' => $form->createView(),
 		]);
 	 }
-
-	/**
-	 * @Route("/parc/ajax", options = { "expose" = true }, name="ajax")
-	 * @Method({"GET", "POST"})
-	 */
-	 public function ajaxAction(EntityManagerInterface $em, Request $request) {
-		$bool = false;
-		$search = $request->request->get('search');
-		$affectations = $em->getRepository(Affectations::class)->findAll();
-		if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
-			foreach($affectations as $affectation) {
-				if (strcmp($search, $affectation->getNparc()) == 0) {$bool = true;}
-			}
-			return new JsonResponse($bool);
-		} else {
-			return $this->render('parc/creation/index.html.twig');
-		}
-	}
 }

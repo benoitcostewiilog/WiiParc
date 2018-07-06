@@ -7,27 +7,65 @@ use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Affectations;
 use App\Entity\Parc;
 use App\Entity\Societe;
+use App\Entity\TypeVehicule;
+use App\Entity\Propriete;
 
 
 class AffectationFixture extends Fixture
 {
     public function load(ObjectManager $manager)
     {
+        // TYPE VEHICULE
+        $vehicule_obj = array();
+    	$vehicules = array(
+    		'Chariot',
+    		'Poids lourd',
+    		'Vehicule de fonction',
+    	);
+
+    	foreach ($vehicules as $vehicule) {
+    		$veh = new TypeVehicule();
+            $veh->setNom($vehicule);
+            array_push($vehicule_obj, $veh);
+
+    		$manager->persist($veh);
+        }
+        
+        $manager->flush();
+
+        // PROPRIETE
+        $propriete_obj = array();
+    	$proprietes = array(
+    		'Location',
+    		'Acheté',
+    		'Appartient au client',
+    	);
+
+    	foreach ($proprietes as $propriete) {
+    		$pro = new Propriete();
+            $pro->setNom($propriete);
+            array_push($propriete_obj, $pro);
+
+    		$manager->persist($pro);
+    	}
+
+        $manager->flush();
+
         // PARC
         $parcs_obj = array();
         $parcs = array(
-    		'parc1' => ["type1",'marque1','nserie1','propriete1','immatriculation1',2001,'commentaires1'],
-    		'parc2' => ['type2','marque2','nserie2','propriete2','immatriculation2',2002,'commentaires2'],
-    		'parc3' => ['type3','marque3','nserie3','propriete3','immatriculation3',2003,'commentaires3'],
-    		'parc4' => ['type4','marque4','nserie4','propriete4','immatriculation4',2004,'commentaires4'],
+    		'parc1' => [1,'marque1','nserie1',1,'immatriculation1',2001,'commentaires1'],
+    		'parc2' => [2,'marque2','nserie2',2,'immatriculation2',2002,'commentaires2'],
+    		'parc3' => [0,'marque3','nserie3',2,'immatriculation3',2003,'commentaires3'],
+    		'parc4' => [2,'marque4','nserie4',0,'immatriculation4',2004,'commentaires4'],
     	);
 
     	foreach ($parcs as $p => $value) {
             $parc = new Parc();
-    		$parc->setType($value[0]);
+    		$parc->setType($vehicule_obj[$value[0]]);
     		$parc->setMarque($value[1]);
     		$parc->setNserie($value[2]);
-    		$parc->setPropriete($value[3]);
+    		$parc->setPropriete($propriete_obj[$value[3]]);
     		$parc->setImmatriculation($value[4]);
     		$parc->setAnnee($value[5]);
     		$parc->setCommentaires($value[6]);

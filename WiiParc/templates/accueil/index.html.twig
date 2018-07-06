@@ -14,7 +14,7 @@
         <tr>
           <th class="align-middle">Numéro de parc</th>
           <th class="align-middle">Société</th>
-          <th class="align-middle" data-tri="1" class="selection">Date d'entrée</th>
+          <th class="align-middle selection" data-tri="1">Date d'entrée</th>
           <th class="align-middle">Date de sortie</th>
           <th class="align-middle">Type</th>
           <th class="align-middle">Marque</th>
@@ -32,10 +32,10 @@
             <td>{{ affectation.societe.nom }}</td>
             <td>{{ affectation.dentree|date("d/m/Y") }}</td>
             <td>{{ affectation.dsortie|date("d/m/Y") }}</td>
-            <td>{{ affectation.parc.type }}</td>
+            <td>{{ affectation.parc.type.nom }}</td>
             <td>{{ affectation.parc.marque }}</td>
             <td>{{ affectation.parc.nserie }}</td>
-            <td>{{ affectation.parc.propriete }}</td>
+            <td>{{ affectation.parc.propriete.nom }}</td>
             <td>{{ affectation.parc.immatriculation }}</td>
             <td>{{ affectation.parc.annee }}</td>
             <td>{{ affectation.parc.commentaires }}</td>
