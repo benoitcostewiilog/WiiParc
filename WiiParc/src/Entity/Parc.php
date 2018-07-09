@@ -56,9 +56,9 @@ class Parc
     private $commentaires;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Affectations", mappedBy="parc")
+     #* @ORM\OneToMany(targetEntity="App\Entity\Affectations", mappedBy="parc")
      */
-    private $affectations;
+    #private $affectations;
 
     public function __construct()
     {
@@ -155,8 +155,9 @@ class Parc
     }
 
     /**
-     * @return Collection|Affectations[]
+     #* @return Collection|Affectations[]
      */
+    /*
     public function getAffectations(): Collection
     {
         return $this->affectations;
@@ -184,5 +185,5 @@ class Parc
 
         return $this;
     }
-
+    */
 }

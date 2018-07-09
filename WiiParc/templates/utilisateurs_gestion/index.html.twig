@@ -13,21 +13,24 @@
     </div>
     <div class="row">
       	<div class="col">
-			<form class="form-inline">
-  				<div class="input-group my-2 mx-2">
-    				<div class="input-group-prepend">
-      					<span class="input-group-text">Nom</span>
-    				</div>
-    				<input type="text" class="form-control" placeholder="Nom">
-  				</div>
-  				<div class="input-group my-2 mx-2">
-    				<div class="input-group-prepend">
-      					<span class="input-group-text">Login</span>
-    				</div>
-    				<input type="text" class="form-control" placeholder="Login">
-  				</div>
-  				<button type="submit" class="btn btn-dark">Valider</button>
-			</form>
+			{{ form_start(form_creation) }}
+			<div class="row">
+				<div class="col-6">
+					{{ form_row(form_creation.username) }}
+					{{ form_row(form_creation.email) }}
+				</div>
+				<div class="col-6">
+					{{ form_row(form_creation.plainPassword.first) }}
+					{{ form_row(form_creation.plainPassword.second) }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-10"></div>
+				<div class="col-2">
+					<button name="creation" class="btn btn-dark my-2" type="submit">Créer</button>
+				</div>
+			</div>
+			{{ form_end(form_creation) }}
       	</div>
     </div>
 </div>
@@ -39,21 +42,24 @@
     </div>
     <div class="row">
       	<div class="col">
-			<form class="form-inline">
-  				<div class="input-group my-2 mx-2">
-    				<div class="input-group-prepend">
-					    <span class="input-group-text">Nom</span>
-					</div>
-					<input type="text" class="form-control" placeholder="Nom">
+			{{ form_start(form_modif) }}
+			<div class="row">
+				<div class="col-6">
+					{{ form_row(form_modif.username) }}
+					{{ form_row(form_modif.email) }}
 				</div>
-				<div class="input-group my-2 mx-2">
-				    <div class="input-group-prepend">
-					    <span class="input-group-text">Login</span>
-				    </div>
-				    <input type="text" class="form-control" placeholder="Login">
+				<div class="col-6">
+					{{ form_row(form_modif.roles) }}
+					{{ form_row(form_modif.droits) }}
 				</div>
-				<button type="submit" class="btn btn-dark">Valider</button>
-			</form>
+			</div>
+			<div class="row">
+				<div class="col-10"></div>
+				<div class="col-2">
+					<button class="btn btn-dark my-2" type="submit">Modifier</button>
+				</div>
+			</div>
+			{{ form_end(form_modif) }}
 		</div>
 	</div>
 </div>
@@ -64,19 +70,55 @@
 				<tr>
 					<th class="align-middle">Username</th>
 				    <th class="align-middle">Email</th>
-				    <th class="align-middle">Password</th>
+				    <th class="align-middle">Droits</th>
+				    <th class="align-middle">Rôles</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for utilisateur in utilisateurs %}
-					<tr>
+					<tr id="{{ utilisateur.id}}">
 						<td>{{ utilisateur.username }}</td>
 						<td>{{ utilisateur.email }}</td>
-						<td>{{ utilisateur.password }}</td>	
+						<td>
+						{% for droit in utilisateur.droits %}
+							{{ droit.nom }}
+						{% endfor %}
+						</td>
+						<td>
+						{% for role in utilisateur.roles %}
+							{{ role }}
+						{% endfor %}
+						</td>
 					</tr>
 				{% endfor %}
 			</tbody>
 		</table>
 	</div>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+$("tbody tr").click(function() {
+  var id = $(this).attr("id");
+	$.ajax({
+			url: "{{ path('utilisateurs_gestion') }}",
+			type: "POST",
+			dataType: "json",
+			data: {id},
+			async: true,
+			success: function (resp) {
+				user = JSON.parse(resp);
+				$("input[id='form_id_user']").val(user.id);
+				$("input[id='form_username']").val(user.username);
+				$("input[id='form_email']").val(user.email);
+				$("select[id='form_roles']").val(user.roles);
+				$("select[id='form_droits']").val(user.droits);
+			}
+      }
+	);
+});
+</script>
+
 {% endblock %}

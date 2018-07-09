@@ -9,12 +9,30 @@ use App\Entity\Parc;
 use App\Entity\Societe;
 use App\Entity\TypeVehicule;
 use App\Entity\Propriete;
-
+use App\Entity\Roles;
 
 class AffectationFixture extends Fixture
 {
     public function load(ObjectManager $manager)
     {
+        // ROLE
+        $role_obj = array();
+        $roles = array(
+            'ROLE_USER',
+            'ROLE_ADMIN',
+            'ROLE_SUPER_ADMIN',
+        );
+
+        foreach ($roles as $role) {
+            $ro = new Roles();
+            $ro->setNom($role);
+            array_push($role_obj, $ro);
+
+            $manager->persist($ro);
+        }
+        
+        $manager->flush();
+
         // TYPE VEHICULE
         $vehicule_obj = array();
     	$vehicules = array(

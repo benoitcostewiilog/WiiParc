@@ -24,13 +24,20 @@ class Societe
     private $nom;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Affectations", mappedBy="societe")
+     #* @ORM\OneToMany(targetEntity="App\Entity\Affectations", mappedBy="societe")
      */
-    private $affectations;
+    #private $affectations;
+
+        /**
+     * #@ORM\ManyToMany(targetEntity="App\Entity\Utilisateurs", mappedBy="droits")
+     * #@ORM\JoinColumn(nullable=false)
+     */
+    #private $utilisateurs;
 
     public function __construct()
     {
         $this->affectations = new ArrayCollection();
+        $this->utilisateurs = new ArrayCollection();
     }
 
     public function getId()
@@ -51,8 +58,9 @@ class Societe
     }
 
     /**
-     * @return Collection|Affectations[]
+     #* @return Collection|Affectations[]
      */
+    /*
     public function getAffectations(): Collection
     {
         return $this->affectations;
@@ -80,4 +88,35 @@ class Societe
 
         return $this;
     }
+    */
+
+    /**
+     #* @return Collection|Utilisateurs[]
+     */
+    /*
+    public function getUtilisateurs(): Collection
+    {
+        return $this->utilisateurs;
+    }
+
+    public function addUtilisateur(Utilisateurs $utilisateur): self
+    {
+        if (!$this->utilisateurs->contains($utilisateur)) {
+            $this->utilisateurs[] = $utilisateur;
+            $utilisateur->addDroit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUtilisateur(Utilisateurs $utilisateur): self
+    {
+        if ($this->utilisateurs->contains($utilisateur)) {
+            $this->utilisateurs->removeElement($utilisateur);
+            $utilisateur->removeDroit($this);
+        }
+
+        return $this;
+    }
+    */
 }

@@ -19,13 +19,13 @@ class Affectations
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parc", inversedBy="affectations", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parc", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $parc;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Societe", inversedBy="affectations", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Societe", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $societe;

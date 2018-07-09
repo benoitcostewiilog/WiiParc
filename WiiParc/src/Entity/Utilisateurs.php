@@ -55,7 +55,11 @@ class Utilisateurs implements UserInterface, \Serializable
     private $roles;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Droits", mappedBy="utilisateur")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Societe", inversedBy="utilisateurs")
+     * @ORM\JoinTable(name="utilisateurs_societes",
+            joinColumns={@ORM\JoinColumn(name="utilisateur_id", referencedColumnName="id")},
+            inverseJoinColumns={@ORM\JoinColumn(name="societe_id", referencedColumnName="id")}
+        )
      */
     private $droits;
 
@@ -87,68 +91,9 @@ class Utilisateurs implements UserInterface, \Serializable
         return $this->password;
     }
 
-    /**
-     * @return Collection|Droits[]
-     */
-    public function getDroits(): Collection
-    {
-        return $this->droits;
-    }
-
-    public function addDroit(Droits $droit): self
-    {
-        if (!$this->droits->contains($droit)) {
-            $this->droits[] = $droit;
-            $droit->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDroit(Droits $droit): self
-    {
-        if ($this->droits->contains($droit)) {
-            $this->droits->removeElement($droit);
-            // set the owning side to null (unless already changed)
-            if ($droit->getUtilisateur() === $this) {
-                $droit->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getRoles()
     {
-        return array('ROLE_USER');
-    }
-
-    public function eraseCredentials()
-    {
-    }
-
-    /** @see \Serializable::serialize() */
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt,
-        ));
-    }
-
-    /** @see \Serializable::unserialize() */
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt
-        ) = unserialize($serialized, array('allowed_classes' => false));
+        return $this->roles;
     }
 
     public function setUsername(string $username): self
@@ -190,6 +135,60 @@ class Utilisateurs implements UserInterface, \Serializable
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+        ) = unserialize($serialized, array('allowed_classes' => false));
+    }
+
+    /**
+     * @return Collection|Societe[]
+     */
+    public function getDroits(): Collection
+    {
+        return $this->droits;
+    }
+
+    public function addDroit(Societe $droit): self
+    {
+        if (!$this->droits->contains($droit)) {
+            $this->droits[] = $droit;
+        }
+
+        return $this;
+    }
+
+    public function removeDroit(Societe $droit): self
+    {
+        if ($this->droits->contains($droit)) {
+            $this->droits->removeElement($droit);
+        }
 
         return $this;
     }
