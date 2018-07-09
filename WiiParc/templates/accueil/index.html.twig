@@ -26,7 +26,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for affectation in affectations %}
+        {% for affectation in listAffectations %}
           <tr>
             <td>{{ affectation.nparc }}</td>
             <td>{{ affectation.societe.nom }}</td>
@@ -49,29 +49,71 @@
   <div class="col-6"></div>
   	<div class="col-6">
   		<ul class="pagination justify-content-end mx-2">
-  			<li class="page-item">
-  				<a class="page-link prev" href="#" >Précédent</a>
+  			<li{% if page == 1 %} class="page-item disabled"{% else %} class="page-item"{% endif %}>
+  				<a class="page-link" href="{{ path('accueil', {'page': page - 1}) }}" >Précédent</a>
   			</li>
-  			<li class="page-item">
-  				<a class="page-link" href="#">1</a>
-  			</li>
-  			<li class="page-item">
-  				<a class="page-link" href="#">2</a>
-  			</li>
-  			<li class="page-item">
-  				<a class="page-link" href="#">3</a>
-  			</li>
-  			<li class="page-item">
-  				<a class="page-link next" href="#">Suivant</a>
+        {% for p in range(1, nbPages) %}
+          <li{% if p == page %} class="page-item active"{% else %} class="page-item"{% endif %}>
+            <a class="page-link" href="{{ path('accueil', {'page': p}) }}"> {{ p }} </a>
+          </li>
+        {% endfor %}
+  			<li{% if page == nbPages %} class="page-item disabled"{% else %} class="page-item"{% endif %}>
+  				<a class="page-link" href="{{ path('accueil', {'page': page + 1}) }}">Suivant</a>
   			</li>
   		</ul>
   	</div>
   </div>
 </div>
 
-
 {% endblock %}
 
 {% block javascripts %}
+<script type="text/javascript">
+/*
+var page = 0;
+var nbPerPage = 2;
+var maxPages = 3;
+
+disabledButton();
+
+$('ul').on("click", ".next", function() {
+	if (page < maxPages) {
+    page++;
+    requeteAjax(page, nbPerPage);
+  }
+  disabledButton();
+});
+
+$('ul').on("click", ".prev", function() {
+	if (page > 0) {
+    page--;
+    // requeteAjax(page, nbPerPage);
+  }
+  disabledButton();
+});
+
+function disabledButton() {
+  if (page <= 0) {$(".prev").addClass("disabled");}
+  else {$(".prev").removeClass("disabled");}
+  if (page >= maxPages) {$(".next").addClass("disabled");}
+  else {$(".next").removeClass("disabled");}
+}
+
+function requeteAjax(page, nbPerPage) {
+  console.log(page, nbPerPage)
+	$.ajax({
+			url: "{{ path('accueil', {'page': 1}) }}",
+			type: "POST",
+			dataType: "json",
+			data: {"page": page, "nbPerPage": nbPerPage},
+			async: true,
+			success: function(resp) {
+        console.log(resp);
+			}
+	});
+}
+*/
+</script>
+
 <script src="{{ asset('vendor/jquery/script.js') }}"></script>
 {% endblock %}

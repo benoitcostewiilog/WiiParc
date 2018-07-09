@@ -15,7 +15,7 @@ $(document).ready(function() {
 		var nparc = $(this).find('td').eq(0).html();
 		var pathArray = window.location.pathname.split("/");
 		var url =  window.location.protocol + "//" + window.location.host;
-		for (var i = 0; i < pathArray.length - 1; i++) {
+		for (var i = 0; i < pathArray.length - 2; i++) {
 			url += pathArray[i] + "/";
 		}
 		window.location.assign(url + "parc/vue/" + nparc);
@@ -24,41 +24,13 @@ $(document).ready(function() {
 	/**
 	 * Dynamic search
 	 */
-	/*
-	var pageActuelle = 1;
-	var entreeParPage = 3;
 
-	function calcNombreDePages(entreeParPage) {
-		return (Math.ceil($("tbody").children().length / entreeParPage));
-	}
-
-	function displayLines(pageActuelle, entreeParPage) {
-		console.log(pageActuelle);
-		for (var j = 0; j < $("tbody").children().length + 1; j++) {
-			$(".avectri > tbody > tr:nth-child(" + j + ")").css("display", "none");
-		}
-		console.log( pageActuelle + ((pageActuelle - 1) * entreeParPage), entreeParPage + ((pageActuelle - 1) * entreeParPage));
-		for (var i = pageActuelle + ((pageActuelle - 1) * entreeParPage); i <= entreeParPage + ((pageActuelle - 1) * entreeParPage); i++) {
-			$(".avectri > tbody > tr:nth-child(" + i + ")").css("display", "content");
-		}
-	}
-
-	var maxPages = calcNombreDePages(entreeParPage);
-	displayLines(pageActuelle, entreeParPage);
-
-	$('.next').on("click", function() {
-		if (pageActuelle < maxPages) {
-			pageActuelle++;
-		}
-		displayLines(pageActuelle, entreeParPage);
+	$(".form-control").on("keyup", function() {
+	  var value = $(this).val().toLowerCase();
+	  $("tbody tr").filter(function() {
+	    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+	  });
 	});
-	$('.prev').on("click", function() {
-		if (pageActuelle > 1) {
-			pageActuelle--;
-		}
-		displayLines(pageActuelle, entreeParPage);
-	});
-	*/
 
 	/**
 	 * Tri de tableau
