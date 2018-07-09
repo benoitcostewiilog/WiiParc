@@ -14,7 +14,7 @@ class AccueilController extends Controller
 	/**
 	 * @Route("/accueil/{page}", name="accueil")
 	 */
-	public function index($page = 1, EntityManagerInterface $em, Request $request)
+	public function index($page, EntityManagerInterface $em, Request $request)
 	{
 		$nbPerPage = 3;
 

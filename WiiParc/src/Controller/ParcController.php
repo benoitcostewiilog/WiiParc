@@ -36,11 +36,6 @@ class ParcController extends Controller
 	 */
 	public function creation(EntityManagerInterface $em, Request $request)
 	{
-
-		$bool = false;
-		$search = $request->request->get('search');
-		$affectations = $em->getRepository(Affectations::class)->findAll();
-
 		$affectation = new Affectations();
 		$form = $this->createForm(AffectationsCreationFormType::class, $affectation);
 
@@ -54,11 +49,14 @@ class ParcController extends Controller
 				$em->flush();    
 			}
 
-			return $this->redirectToRoute('accueil');
+			return $this->redirectToRoute('accueil', array('page' => 1));
 		}
 
 		// AJAX
-		if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
+		if ($request->isXmlHttpRequest()) {
+			$affectations = $em->getRepository(Affectations::class)->findAll();
+			$bool = false;
+			$search = $request->request->get('search');
 			foreach($affectations as $a) {
 				if (strcmp($search, $a->getNparc()) == 0) {$bool = true;}
 			}
@@ -89,7 +87,7 @@ class ParcController extends Controller
 				$em->flush();
 			}
 
-			return $this->redirectToRoute('accueil');
+			return $this->redirectToRoute('accueil', array('page' => 1));
 		}
 
 		return $this->render('parc/modification/index.html.twig', [
@@ -119,7 +117,7 @@ class ParcController extends Controller
 		$new_parc->setAnnee($parc->getAnnee());
 		$new_parc->setCommentaires($parc->getCommentaires());
 
-		$affectations = $parc->getAffectations();
+		$affectations = $em->getRepository(Affectations::class)->findParcAffectations($affectation->getNparc());
 		foreach($affectations as $a) {
 			$new_parc->addAffectation($a);
 		}
@@ -136,7 +134,17 @@ class ParcController extends Controller
 				$em->flush();
 			}
 
-			return $this->redirectToRoute('accueil');
+			return $this->redirectToRoute('accueil', array('page' => 1));
+		}
+
+		// AJAX
+		if ($request->isXmlHttpRequest()) {
+			$bool = false;
+			$search = $request->request->get('search');
+			foreach($affectations as $a) {
+				if (strcmp($search, $a->getNparc()) == 0) {$bool = true;}
+			}
+			return new JsonResponse($bool);
 		}
 
 		return $this->render('parc/changement_numero/index.html.twig', [

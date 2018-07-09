@@ -35,6 +35,17 @@ class AffectationsRepository extends ServiceEntityRepository
 		return new Paginator($query, true);
 	}
 
+	public function findParcAffectations($Nparc)
+	{
+		return $this
+			->createQueryBuilder('a')
+			->where('a.id = :id')
+			->setParameter('id', $Nparc)
+			->getQuery()
+			->getResult()
+		;
+	}
+
 //    /**
 //     * @return Affectations[] Returns an array of Affectations objects
 //     */

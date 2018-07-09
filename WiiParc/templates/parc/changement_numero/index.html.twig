@@ -39,3 +39,34 @@
 {{ form_end(form, {'render_rest' : false}) }}
 
 {% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+$("#affectations_creation_form_nparc").keyup(function() {
+  resetErrors();
+  var val = $(this).val();
+	$.ajax({
+			url: "{{ path('parc_creation') }}",
+			type: "POST",
+			dataType: "json",
+			data: {"search": val},
+			async: true,
+			success: function (resp) {
+        if (resp) {
+          $("#affectations_creation_form_validation").prop("disabled", true);
+          var msg = '<span class="invalid-feedback d-block"><span class="mb-0 d-block"><span class="initialism form-error-icon badge badge-danger">Error</span> <span class="form-error-message">Numéro déjà attribué</span></span></span>';
+          $("#affectations_creation_form_nparc").addClass('is-invalid').after(msg);
+        } else {
+          $("#affectations_creation_form_validation").prop("disabled", false);
+			  }
+      }
+	});
+});
+
+function resetErrors() {
+    $('input, select').removeClass('is-invalid');
+    $("span").remove();
+}
+
+</script>
+{% endblock %}
